@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import {MyInput} from '../components/MyInput';
+import { ItemContact } from '../components/ItemContact';
 
 
 export function Home(){
@@ -31,18 +32,26 @@ export function Home(){
                 <Text style={styles.titleHead}>Agenda Telefônica - DDM</Text>
             </View>
             <View style={styles.formContainer}>
-            <MyInput iconName="user" textInput="Nome" value={user} onChangeText={(e) => setUser(e)} /> 
-             <MyInput iconName="phone" textInput="Telefone" value={phone} onChangeText={(e) => setTelefone(e)} keyboardType="numeric" /> 
+            <MyInput iconName="user" textInput="Digite Nome" value={user} onChangeText={(e) => setUser(e)} /> 
+             <MyInput iconName="phone" textInput="Digite Telefone" value={phone} onChangeText={(e) => setPhone(e)} keyboardType="numeric" /> 
                                        
                        <TouchableOpacity style={styles.button} onPress={handlesaveContacts}>
                             <Text style={styles.buttonText}>Salvar</Text>
                      </TouchableOpacity>
             </View>
-            <View>
 
+            <View style={styles.list}>  
+                <Text style={styles.titleList}>Meus Contatos</Text>
+                <FlatList  data={contacts}  
+                        keyExtractor={item => item.id} 
+                        renderItem={ ({item}) =>  (
+                        <ItemContact nome={ item.name } phone={item.phone} apagar={() =>handleDeleteContact(item.id)} />
+                    ) }
+                /> 
             </View>
-        </View>
-    )
+            </View>
+       
+    );
 
 }
 
